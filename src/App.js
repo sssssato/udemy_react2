@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { ChildArea } from "./ChildArea";
 import "./styles.css";
 
@@ -6,8 +6,17 @@ export default function App() {
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
 
+  // テキストボックスの内容変更
   const onChangeText = (e) => setText(e.target.value);
+
+  // 表示ボタン
   const onClickOpen = () => setOpen(!open);
+
+  // 閉じるボタン
+  const onClickClose = useCallback(() => setOpen(false), []);
+
+  const temp = useMemo(() => 1 + 3, []);
+  console.log(temp);
 
   return (
     <div className="App">
@@ -15,7 +24,7 @@ export default function App() {
       <br />
       <br />
       <button onClick={onClickOpen}>表示</button>
-      <ChildArea open={open} />
+      <ChildArea open={open} onClickClose={onClickClose} />
     </div>
   );
 }
